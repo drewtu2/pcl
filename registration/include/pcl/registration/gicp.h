@@ -146,6 +146,16 @@ namespace pcl
         input_covariances_.reset ();
       }
 
+      /** \brief GICP doesn't use the DefaultConvergenceCriteria. Therefore,
+       * we should throw an exception in the event that its accessed to prevent
+       * causing confusion on the convergence results.
+       */
+      inline typename pcl::registration::DefaultConvergenceCriteria<Scalar>::Ptr override
+      getConvergeCriteria ()
+      {
+        throw std::runtime_error( "getConvergeCriteria() is unsupported" );
+      }
+
       /** \brief Provide a pointer to the covariances of the input source (if computed externally!). 
         * If not set, GeneralizedIterativeClosestPoint will compute the covariances itself.
         * Make sure to set the covariances AFTER setting the input source point cloud (setting the input source point cloud will reset the covariances).
